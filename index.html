@@ -124,17 +124,475 @@
                     <div class="resume-section-content">
                         <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                             <div class="flex-grow-1">
-                                <h3 class="mb-0">Componentes básicos do MQTT</h3>
-                                <p>Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.</p>
+                                <h3 class="mb-0">Clientes MQTT</h3>
+                                <p>
+                                    Qualquer dispositivo que se comunique através do protocolo MQTT em uma rede é denominado cliente MQTT. 
+                                    Os clientes MQTT podem desempenhar dois papeis distintos: <strong>publicadores (publish)</strong> e 
+                                    <strong>assinantes (subscribe)</strong>. 
+                                    Os publicadores são responsáveis por “publicar” mensagens. Essas mensagens são identificadas por uma 
+                                    palavra chave denominada <strong>tópico</strong>, de modo que, cada mensagem publicada, esteja vinculada 
+                                    a um tópico adequado. Os assinantes, por sua vez, “assinam” os tópicos de interesse e recebem as mensagens 
+                                    vínculadas ao tópico escolhido sempre que são publicadas.
+                                    <br><br>
+                                    Quando um cliente MQTT publica uma mensagem ele envia junto do conteúdo da mensagem o tópico a qual ela
+                                    está associada. Esse tópico é definido pelos desenvolvedores da aplicação, que devem escolher sua estrutura
+                                    e nomeclatura com base nos requisítos e lógica da aplicação. 
+
+                                </p>
                             </div>
                         </div>
                         <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
                             <div class="flex-grow-1">
-                                <h3 class="mb-0">Fluxo de Trabalho MQTT</h3>
-                                <p>Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.</p>
+                                <h3 class="mb-0">Arquitetura Publish-Subscribe</h3>
+                                <p>
+                                    A arquitetura utilizada no protocolo MQTT é a <strong>Arquitetura Publish-Subscribe</strong>. Diferente 
+                                    da arquitetura cliente-servidor na qual clientes se comunicam diretamente com os servidores, realizando 
+                                    requisições e recebendo as respostas dessas requisições diretamente dos servidores, na arquitetura 
+                                    Publish-Subscribe essa comunicação não é realizada de forma direta, sendo mediada por uma entidade 
+                                    intermediária denominado <strong>MQTT broker</strong>. Cada mensagem publicada é enviada para o MQTT 
+                                    broker que a distribui aos clientes assinantes apropriados. Dentre as funções do MQTT broker, destaca-se:
+                                    <br><ol>
+                                        <li>Mediar o fluxo de mensagens entre os clientes publicadores e assinantes</li>
+                                        <li>Gerenciar as solicitações de conexão e desconexão dos clientes MQTT.</li>
+                                        <li>Gerenciar as assinaturas e cancelamentos de tópicos dos assinantes</li>
+                                        <li>Garantir a entrega das mensagens aos clientes assinantes de acordo com o QoS especificados</li>
+                                    </ol><br>
+                                    Para exemplificar o funcionamento da arquitetura publish-subscribe, tomemos o diagrama da figura 1 abaixo. 
+                                    Um sensor de temperatura (cliente MQTT publicador) envia um pacote de dados (tópico + mensagem) para um
+                                    servidor central (MQTT broker). O servidor central verifica no conteúdo dos dados recebidos a palavra chave
+                                    (tópico) referente a medição realizada pelo sensor. A seguir, busca em uma tabela assinantes x tópicos,
+                                    os dispositivos (cliente MQTT assinante) que a medição recebida deve ser enviada.<br></br>
+                                    <div class="image-container">
+                                        <figure>
+                                            <img src="assets/img/aquitetura_pub-sub.png" alt="Arquitetura pub-sub" width="1000" height="500">
+                                            <figcaption><strong> Figura 1: Diagrama da Arquitetura Publish-Subscribe</strong></figcaption>
+                                        </figure>
+                                    </div><br></br>                                 
+                                    O uso da arquitetura Publish-Subscribe oferece vantagens significativas para o protocolo MQTT, destacando-se:
+                                    <br><br><ol>
+                                        <li>
+                                            <strong>Desacoplamento:</strong> publicadores e assinantes não precisam conhecer uns aos
+                                            outros diretamente, permitindo que eles operem de forma independente.
+                                        </li>
+                                        <li>
+                                            <strong>Escalabilidade:</strong> novos publicadores e assinantes podem ser adicionados facilmente
+                                            sem afetar o sistema como um todo. Isso permite que os sistemas cresçam conforme necessário para
+                                            lidar com um número crescente de usuários e/ou dispositivos.
+                                        </li>
+                                        <li>
+                                            <strong>Eficiência de rede:</strong> a arquitetura Publish-Subscribe é eficiente em termos de uso
+                                            de rede, pois as mensagens são entregues apenas aos assinantes especificados. Isso reduz a largura
+                                            de banda necessária e minimiza o tráfego desnecessário na rede.
+                                        </li>
+                                        <li>
+                                            <strong>Flexibilidade:</strong> os assinantes podem se inscrever e cancelar a assinatura de tópicos
+                                            dinamicamente, conforme necessário. Isso oferece flexibilidade para os usuários personalizarem sua
+                                            experiência de acordo com suas necessidades específicas.
+                                        </li>
+                                        <li>
+                                            <strong>Tempo real e assíncrono:</strong> a arquitetura Publish-Subscribe suporta comunicação em
+                                            tempo real e assíncrona entre os componentes do sistema. Isso é especialmente útil em cenários onde
+                                            a latência é crítica ou quando os dados são gerados em intervalos irregulares.
+                                        </li>
+                                    </ol><br>
+                                    A não necessidade de assinantes realizarem requisições para receberem as mensagens dos publicadores aliadas
+                                    a outras técnicas como uma estrutura compacta de mensagens, permitem o protocoloco de comunicação MQTT
+                                    maximizar a utilização da largura de banda da rede, tornando-o leve e eficiente para aplicações com
+                                    limitações de largura de banda e recursos computacionais.<br><br>
+                                </p>
                             </div>
                         </div>
-                    </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Pacotes de Controle (Control Packets)</h3>
+                                <p>
+                                    O protocolo MQTT define pacotes de controle como unidades de dados que carregam consigo informações sobre
+                                    o tipo e a estrutura das mensagens enviadas ao MQTT Broker e recebidas dele. Atualmente, existem 15 diferentes
+                                    tipos de pacotes de controle, que podem ser organizados em 3 categorias: pacotes voltados à conexão, pacotes
+                                    voltados à publicação e pacotes voltados à inscrição.<br><br>
+                                    <div class="image-container">
+                                        <figure>
+                                            <img src="assets/img/pacotes_mqtt.png" alt="Pacotes MQTT" width="700" height="250">
+                                            <figcaption><strong> Figura 2: Tipos de pacotes de controle do MQTT</strong></figcaption>
+                                        </figure>
+                                    </div><br></br>
+                                    <lo>
+                                        <li>
+                                            <strong>CONNECT:</strong> utilizado pelo cliente MQTT para iniciar uma conexão com o MQTT broker.
+                                        </li>
+                                        <li>
+                                            <strong>CONNACK:</strong> enviado como resposta indicando o resultado da conexão. 
+                                        </li>
+                                        <li>
+                                            <strong>DISCONNECT</strong> cliente MQTT e MQTT broker podem enviar esse pacote e encerrar a conexão de rede.
+                                        </li>
+                                        <li>
+                                            <strong>AUTH:</strong> presente no MQTT 5.0, é utilizado para prover uma autenticação mais segura entre
+                                            cliente MQTT e MQTT broker.
+                                        </li>
+                                        <li>
+                                            <strong>PINGREQ e PINGRESP:</strong> são pacotes utilizados em conjunto com o objetivo de manter a conexão entre
+                                            cliente MQTT e MQTT broker. O cliente MQTT envia pacotes PINGREQ ao MQTT broker, indicando que ainda está ativo, e
+                                            verifica se o MQTT broker ainda está em atividade com base no tempo de retorno do pacote PINGRESP.
+                                        </li>
+                                        <li>
+                                            <strong>PUBLISH:</strong> utilizado para publicar mensagens.
+                                        </li>
+                                        <li>
+                                            <strong>PUBACK, PUBREC, PUBREL e PUBCOMP:</strong> utilizados para reconhecer mensagens de QoS 1 e 2.
+                                        </li>
+                                        <li>
+                                            <strong>SUBSCRIBE:</strong> utilizado pelo cliente MQTT para se inscrever em tópicos.
+                                        </li>
+                                        <li>
+                                            <strong>SUBACK:</strong> retorna o resultado da inscrição.
+                                        </li>
+                                        <li>
+                                            <strong>UNSUBSCRIBE:</strong> utilizado pelo cliente MQTT para desfazer a inscrição em determinado tópico.
+                                        </li>
+                                        <li>
+                                            <strong>UNSUBACK:</strong> retorno do resultado do cancelamento de uma inscrição.
+                                        </li>
+                                    </lo>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Estrutura dos pacotes</h3>
+                                <p>
+                                    No protocolo MQTT, os pacotes são compostos de três partes: (1) Fixed Header, (2) Variable Header e (3) Payload.
+                                    Desses três componentes, a única parte que está presente em todos os pacotes é a Fixed Header.<br><br>
+                                    <div class="image-container">
+                                        <figure>
+                                            <img src="assets/img/estrutura_pacotes_mqtt.png" alt="Estrutura pacotes MQTT" width="470" height="130">
+                                            <figcaption><strong> Figura 3: Estrutura dos pacotes MQTT</strong></figcaption>
+                                        </figure>
+                                    </div><br></br>
+                                    <strong>(1). Fixed Header</strong><br><br>
+                                    A Fixed Header consiste de três campos: MQTT Control Packet Type, Flags e Remaining Length.<br><br>
+                                    <div class="image-container">
+                                        <figure>
+                                            <img src="assets/img/fixed_header.png" alt="Fixed header" width="670" height="180">
+                                            <figcaption><strong> Figura 4: Estrutura da parte fixed header dos pacotes do MQTT</strong></figcaption>
+                                        </figure>
+                                    </div><br></br>
+                                    O MQTT Control Packet Type é um unsigned integer que representa o tipo do pacote que está sendo enviado. Por exemplo,
+                                    o int 1 representa o pacote CONNECT, enquanto o 2 representa o CONNACK.<br><br>
+		                            As flags definem ações específicas que podem ser realizadas pelos pacotes de controle. O pacote PUBLISH, por exemplo,
+                                    contém a flag DUP que, quando ativa, indica se o pacote que está sendo enviado é um pacote que está sendo retransmitido.
+                                    As flags do PUBLISH são as únicas que podem ser alteradas pelo cliente, todos os outros pacotes possuem flags com valores
+                                    fixos.<br><br>
+                                    O campo Remaining Length indica a quantidade de bytes existentes na parte restante do pacote de controle, que inclui a
+                                    Variable Header e o Payload.<br><br><br>
+
+                                    <strong>(2). Variable Header</strong><br><br>
+                                    O conteúdo da Variable Header depende do pacote que está sendo enviado. Na figura abaixo, temos o conteúdo da Variable Header
+                                    dos pacotes CONNECT.<br><br>
+                                    <div class="image-container">
+                                        <figure>
+                                            <img src="assets/img/variable_header.png" alt="Variable header" width="670" height="180">
+                                            <figcaption><strong> Figura 5: Estrutura da parte varible header dos pacotes CONNECT</strong></figcaption>
+                                        </figure>
+                                    </div><br></br>
+                                    <lo>
+                                        <li>
+                                            <strong>Protocol name length:</strong> indica o tamanho, em bytes, do nome do protocolo.
+                                        </li>
+                                        <li>
+                                            <strong>Protocol Name:</strong> representação, de acordo com a tabela ASCII, do nome do protocolo. MQTT (0X4d 0x51 0x54 0x54)
+                                        </li>
+                                        <li>
+                                            <strong>Protocol Level:</strong> indica à versão do protocolo que está sendo utilizada. “4” representa a versão MQTT v3.1.1 e “5”, MQTT v5.0.
+                                        </li>
+                                        <li>
+                                            <strong>Connect Flag:</strong> campo com informações relacionadas às opções de conexão. Por exemplo:
+                                            <ul><br><br>
+                                                <li>
+                                                    Will retain: se ativo, a mensagem será retida.
+                                                </li>
+                                                <li>
+                                                    Will QoS: indica o nível de QoS que a mensagem possuirá.
+                                                </li>
+                                                <li>
+                                                    Will flag: caso ativo, o MQTT Broker enviará uma mensagem de Last Will and Testament em caso de desconexão.
+                                                </li>
+                                            </ul><br>
+                                        </li>
+                                        <li>
+                                            <strong>Keep Alive:</strong> é o período máximo de tempo que o cliente MQTT ficará sem enviar pacotes ao Broker.
+                                        </li>
+                                    </lo><br>
+                                    A ordem dos campos dentro da Variable Header é específica, eles só serão devidamente computados caso sigam a especificação
+                                    do MQTT. Além disso, é proibido omitir qualquer campo, a não ser que o protocolo permita. No pacote PUBLISH, por exemplo, o
+                                    Packet Identifier só está presente quando o QoS é diferente de 0.<br><br><br>
+
+                                    <strong>(3). Payload</strong><br><br>
+                                    O Payload é utilizado para armazenar informações relacionadas ao propósito central de determinado pacote de controle. No pacote
+                                    PUBLISH, por exemplo, o Payload carrega a mensagem que deve ser transmitida ao MQTT broker, enquanto que no SUBSCRIBE, o Payload
+                                    contém os tópicos disponíveis para inscrição, o que corresponde à tarefa principal do pacote.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Mensagens Retidas (Retained Messages)</h3>
+                                <p>
+                                    No MQTT, uma mensagem retida pode ser definida como um pacote de controle PUBLISH com a flag Retain ativa.
+                                    Essa flag informa ao Broker que a mensagem que está sendo enviada pelo cliente deve ser armazenada sob
+                                    determinado tópico e garante que qualquer novo assinante daquele tópico receba a mensagem.<br><br>
+                                    Quando a flag não está ativa, apenas os clientes já inscritos no tópico no momento do envio irão receber a
+                                    mensagem. Cada tópico tem a capacidade de armazenar somente uma mensagem por vez. Então quando a flag está
+                                    ativa, o Broker mantém apenas a mensagem mais recente.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Last Will and Testament</h3>
+                                <p>
+                                    Last Will and Testament é uma ferramenta que permite que os clientes definam uma mensagem que será
+                                    automaticamente enviada pelo Broker aos assinantes de um tópico caso a conexão entre publicador e
+                                    Broker seja interrompida de forma inesperada.<br><br>
+                                    Quando um cliente se conecta a um Broker, uma mensagem “testamento” pode ser definida. O Broker armazena
+                                    essa mensagem até que identifique uma desconexão súbita do cliente. Uma vez que a desconexão é percebida,
+                                    o Broker transmite a mensagem a todos os inscritos do tópico em pauta. Caso a desconexão do cliente não seja
+                                    inesperada, a mensagem será descartada.<br><br>
+                                    Esse recurso é de extrema importância na manutenção da integridade do sistema e na garantia de uma comunicação eficiente.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Sessões Persistentes </h3>
+                                <p>
+                                    Para receber mensagens de um Broker, um servidor deve estabelecer uma conexão com o mesmo e se inscrever nos
+                                    tópicos de seu interesse. Em uma sessão não persistente, caso a conexão seja interrompida, o cliente perde todas
+                                    as suas inscrições e, quando se reconecta, precisa refazê-las. Para contornar essa situação, o cliente pode requisitar
+                                    uma sessão persistente ao se conectar com o Broker.<br><br>
+                                    Sessões persistentes armazenam no Broker todas as informações do cliente consideradas relevantes, garantido que as
+                                    inscrições e as mensagens sejam mantidas mesmo diante de uma desconexão. Assim, no momento de reconexão todas essas
+                                    informações estarão imediatamente disponíveis.<br><br>
+                                    Essa ferramenta contribui na redução da sobrecarga na reconexão entre cliente e Broker, especialmente em redes mais
+                                    instáveis onde desconexões estão mais suscetíveis a ocorrer. 
+                                </p>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-column flex-md-row justify-content-between mb-5">
+                            <div class="flex-grow-1">
+                                <h3 class="mb-0">Fluxo de trabalho do MQTT</h3>
+                                <p>
+                                    O fluxo de trabalho do protocolo MQTT envolve um série de etapas bem definidas e estruturadas, sendo elas:
+                                <br><br><strong>Conexão inicial</strong>
+                                    <ol>
+                                        <li>
+                                            O cliente MQTT inicia o processo de conexão com o MQTT broker. Esse processo geralmente é realizado
+                                            através de uma conexão TCP/IP. No entanto, outros protocolos também podem ser usados, como o MQTT-SN,
+                                            WebSocket (WS), WebSocket Secure (WSS), QUIC, dentre outros.
+                                        </li>
+                                        <li>
+                                            Caso o protocolo de transporte utilizado seja o TCP/IP, o cliente MQTT estabelece uma conexão TCP/IP com
+                                            o endereço IP e a porta do MQTT broker. A porta padrão para conexões MQTT é a porta 1883 (ou 8883 para
+                                            conexões seguras SSL/TLS).
+                                        </li>
+                                        <li>
+                                            Durante a fase de conexão, ocorre um handshake entre o cliente MQTT e o MQTT broker para estabelecer
+                                            os parâmetros da conexão. Isso inclui informações como o nível de QoS, e detalhes de autenticação, como
+                                            nome de usuário e senha
+                                        </li>
+                                        <li>
+                                            O cliente MQTT envia um pacote CONNECT para o MQTT broker contendo informações sobre ele, como seu ID
+                                            de cliente, suas configurações de sessão, nome de usuário e a senha (se aplicável).
+                                        </li>
+                                        <li>
+                                            MQTT broker responde com um pacote CONNACK, indicando se a conexão foi aceita ou não. Se aceita, o
+                                            cliente MQTT e o MQTT broker estão prontos para trocar mensagens.
+                                        </li>
+                                        <li>
+                                            Uma vez estabelecida a conexão, o cliente MQTT pode começar a publicar mensagens, se inscrever em tópicos ou
+                                            realizar outras operações suportadas pelo protocolo MQTT.
+                                        </li>
+                                        <li>
+                                            Periodicamente, o cliente MQTT e o MQTT broker podem trocar mensagens de controle para manter a conexão ativa e
+                                            verificar se a outra parte ainda está disponível. Isso ajuda a garantir a confiabilidade da comunicação
+                                            e permite detectar desconexões ou falhas de rede.
+                                        </li>
+                                    </ol>
+                                <br><br><strong>Publicação de mensagens</strong><br><br>
+                                    <ol>
+                                        <li>
+                                            Após a conexão inicial ter sido estabelecida com sucesso, um cliente MQTT pode iniciar o processo de
+                                            publicação de mensagens.
+                                        </li>
+                                        <li>
+                                            Para publicar uma mensagem, o cliente MQTT envia um pacote PUBLISH para o MQTT broker.
+                                        </li>
+                                        <li>
+                                            O pacote PUBLISH contém várias informações, incluindo o tópico ao qual a mensagem está sendo publicada e
+                                            o conteúdo da mensagem (payload).
+                                        </li>
+                                        <li>
+                                            O tópico é uma string de texto que serve como um identificador para a mensagem. Ele pode seguir uma estrutura
+                                            hierárquica para organizar as mensagens em categorias ou temas relacionados.
+                                        </li>
+                                        <li>
+                                            O payload da mensagem pode conter qualquer tipo de dados, como telemetria de sensores, comandos de controle,
+                                            mensagens de status, entre outros.
+                                        </li>
+                                        <li>
+                                            Antes de publicar a mensagem, o cliente MQTT pode especificar o nível de QoS desejado para essa mensagem. O
+                                            nível de QoS determina o nível de garantia de entrega da mensagem e pode ser 0, 1 ou 2.
+                                        </li>
+                                        <li>
+                                            Após receber a mensagem, o MQTT broker a armazena temporariamente e a encaminha para os assinantes que estão
+                                            inscritos no tópico, consultando em uma tabela assinantes x tópicos para determinar os assinantes vinculados.
+                                        </li>
+                                        <li>
+                                            Se necessário, o MQTT broker pode confirmar a recepção da mensagem de volta ao cliente MQTT, dependendo do nível
+                                            de QoS especificado. Isso ajuda a garantir a entrega confiável da mensagem, mesmo em condições de rede instáveis.
+                                        </li>
+                                        <li>
+                                            Depois que a mensagem é publicada com sucesso, o cliente MQTT pode continuar publicando mais mensagens conforme
+                                            necessário ou realizar outras operações suportadas pelo protocolo MQTT.
+                                        </li>
+                                    </ol>
+                                <br><br><strong>Assinatura de tópicos</strong><br><br>
+                                <ol>
+                                    <li>
+                                        Um cliente MQTT que deseja receber mensagens sobre tópicos específicos deve se inscrever nesses tópicos no MQTT broker.
+                                    </li>
+                                    <li>
+                                        Para se inscrever em um tópico, o cliente MQTT envia um pacote SUBSCRIBE para o MQTT broker.
+                                    </li>
+                                    <li>
+                                        O pacote SUBSCRIBE contém uma lista de tópicos aos quais o cliente MQTT deseja se inscrever, bem como o nível de QoS desejado
+                                        para cada tópico.
+                                    </li>
+                                    <li>
+                                        O cliente MQTT pode se inscrever em múltiplos tópicos de uma só vez, especificando-os na lista de inscrição.
+                                    </li>
+                                    <li>
+                                        O MQTT broker processa o pedido de inscrição e registra o cliente como um assinante dos tópicos especificados.
+                                    </li>
+                                    <li>
+                                        Quando uma mensagem é publicada em um tópico para o qual o cliente MQTT está inscrito, o MQTT broker encaminha a mensagem para
+                                        o cliente MQTT.
+                                    </li>
+                                    <li>
+                                        O cliente MQTT pode especificar diferentes níveis de QoS para cada tópico ao se inscrever. Isso permite que o cliente controle a
+                                        garantia de entrega das mensagens recebidas para cada tópico individualmente.
+                                    </li>
+                                    <li>
+                                        Após se inscrever com sucesso nos tópicos desejados, o cliente MQTT está pronto para receber mensagens publicadas sobre esses tópicos.
+                                    </li>
+                                    <li>
+                                        O cliente MQTT pode continuar se inscrevendo em outros tópicos conforme necessário ou realizar outras operações suportadas pelo
+                                        protocolo MQTT.
+                                    </li>
+                                </ol>
+                                <br><br><strong>Recebimento de mensagem</strong><br><br>
+                                <ol>
+                                    <li>
+                                        O MQTT broker verifica se há clientes MQTT inscritos no tópico específico no momento em que a mensagem é publicada.
+                                    </li>
+                                    <li>
+                                        Se houver um ou mais clientes MQTT inscritos no tópico, o MQTT broker envia a mensagem para esses clientes.
+                                    </li>
+                                    <li>
+                                        A entrega da mensagem pode ocorrer de acordo com o nível de QoS especificado na publicação da mensagem.
+                                    </li>
+                                    <li>
+                                        No nível de QoS 0 (entrega "no máximo uma vez"), o MQTT broker envia a mensagem uma única vez para o cliente MQTT assim que a mensagem é
+                                        publicada, sem confirmar a entrega.
+                                    </li>
+                                    <li>
+                                        No nível de QoS 1 (entrega "pelo menos uma vez"), o MQTT broker envia a mensagem para o cliente MQTT e espera uma confirmação de
+                                        recebimento (PUBACK) do cliente.
+                                    </li>
+                                    <li>
+                                        No nível de QoS 2 (entrega "exatamente uma vez"), o MQTT broker e o cliente MQTT trocam uma série de mensagens para garantir que a
+                                        mensagem seja entregue exatamente uma vez, mesmo em caso de falhas de rede ou reconexão.
+                                    </li>
+                                    <li>
+                                        Após receber a mensagem, o cliente MQTT a processa conforme necessário, executando qualquer lógica associada a ele na definição da aplicação.
+                                    </li>
+                                    <li>
+                                        O cliente MQTT pode continuar recebendo e processando mensagens conforme elas são publicadas nos tópicos em que está inscrito.
+                                    </li>
+                                    <li>
+                                        O MQTT broker pode armazenar temporariamente as mensagens para clientes MQTT que estão temporariamente desconectados ou offline, garantindo
+                                        que eles recebam as mensagens assim que se reconectarem.
+                                    </li>
+                                </ol>
+                                <br><br><strong>Processamento da mensagem</strong><br><br>
+                                <ol>
+                                    <li>
+                                        Após receber uma mensagem do MQTT broker, o cliente MQTT processa essa mensagem de acordo com a lógica associada a ele na definição da aplicação.
+                                    </li>
+                                    <li>
+                                        O processamento da mensagem pode envolver uma variedade de atividades. Algumas possíveis ações incluem:
+                                        <ul><br><br>    
+                                            <li>
+                                                Análise dos dados contidos na mensagem para extrair informações relevantes.
+                                            </li>
+                                            <li>
+                                                Tomada de decisões com base nas informações recebidas, como acionar uma ação específica ou enviar uma resposta.
+                                            </li>
+                                            <li>
+                                                Atualização do estado interno do cliente MQTT com base nas informações recebidas, como atualização de variáveis ou registros de estado.
+                                            </li>
+                                            <li>
+                                                Encaminhamento da mensagem para outros sistemas ou componentes para processamento adicional.
+                                            </li>
+                                        </ul><br>
+                                    </li>
+                                    <li>
+                                        O processamento da mensagem pode ser assíncrono, permitindo que o cliente MQTT continue funcionando normalmente enquanto processa a mensagem em segundo plano.
+                                    </li>
+                                    <li>
+                                        O cliente MQTT pode implementar tratamento de erro adequado para lidar com situações em que o processamento da mensagem falha ou ocorrem exceções.
+                                    </li>
+                                    <li>
+                                        Após o processamento da mensagem, o cliente MQTT pode realizar outras operações, como publicar mensagens adicionais, enviar respostas ou executar ações
+                                        adicionais com base nas informações recebidas.
+                                    </li>
+                                </ol>
+                                <br><br><strong>Desconexão</strong><br><br>
+                                <ol>
+                                    <li>
+                                        Após concluir as operações necessárias, o cliente MQTT pode optar por encerrar a conexão com o MQTT broker.
+                                    </li>
+                                    <li>
+                                        A desconexão pode ser iniciada pelo cliente MQTT ou pelo MQTT broker, e pode ocorrer por uma variedade de motivos, incluindo:
+                                        <ul><br><br>
+                                            <li>
+                                                O cliente MQTT não precisa mais se comunicar com o MQTT broker.
+                                            </li>
+                                            <li>
+                                                O cliente MQTT está temporariamente offline ou entrando em um estado de economia de energia.
+                                            </li>
+                                            <li>
+                                                Ocorreu um erro ou exceção que requer a desconexão do cliente MQTT.
+                                            </li>
+                                        </ul><br>
+                                    </li>
+                                    <li>
+                                        Para se desconectar desconectar, o cliente MQTT envia um pacote DISCONNECT para o MQTT broker.
+                                    </li>
+                                    <li>
+                                        O pacote DISCONNECT notifica o MQTT broker de que o cliente MQTT deseja encerrar a conexão de forma limpa.
+                                    </li>
+                                    <li>
+                                        Após receber o pacote DISCONNECT, o MQTT broker finaliza a sessão com o cliente MQTT e libera quaisquer recursos associados à sua conexão.
+                                    </li>
+                                    <li>
+                                        O cliente MQTT pode reconectar-se ao MQTT broker a qualquer momento posterior, se necessário, reiniciando o processo de conexão e retomando a
+                                        comunicação com o MQTT broker.
+                                    </li>
+                                </ol>
+                                </p>
+                            </div>
+                        </div>
                 </div>
             </section>
             <hr class="m-0" />

@@ -12771,3 +12771,18 @@ section.resume-section .resume-section-content {
     padding-bottom: 5rem;
   }
 }
+.image-container {
+  text-align: center; /* Centraliza o conteúdo horizontalmente */
+}
+/* Estilizando a legenda */
+figcaption {
+  text-align: center; /* Centraliza o texto da legenda */
+  font-style: italic; /* Define o estilo da fonte para itálico */
+}
+
+ol {
+  padding-left: 20px; /* Adiciona padding à esquerda da lista */
+}
+li {
+  margin-bottom: 10px; /* Adiciona margem abaixo de cada item */
+}
